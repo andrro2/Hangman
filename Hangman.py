@@ -5,6 +5,13 @@ import random
 country =[]
 capitals=[]
 
+def printhangman(lifepoint):
+    with open("hangart.txt", "r") as f:
+        hangman = f.readlines()
+        hangmanpic = [hangman[111:135],hangman[85:109],hangman[59:83],hangman[33:57],hangman[9:31],hangman[1:7]]
+        for line in hangmanpic[lifepoint]:
+            print(line, end="")
+    f.close()
 
 def menu():
     start = 0
