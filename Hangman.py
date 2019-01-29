@@ -14,6 +14,7 @@ def menu():
     elif user_input == '2':
         start = 2
         return start
+        pass
 
     elif user_input == '3':
         start = 3
