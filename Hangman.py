@@ -22,16 +22,18 @@ def menu():
         start = 3
         return start
 
-def win_lose():
+def win():
 
 
+
+def play(letter):
     for letter in picked():
         print('_' * len(picked))
-    
 
-Start = time.time()
-time.process_time()
-End = time.time()
+
+# Start = time.time()
+# time.process_time()
+# End = time.time()
 
 def import_file():
     temp = open('capitals.txt', 'r')
