@@ -35,6 +35,7 @@ def generator():
     pick = random.randint(0, 182)
     picked = capitals[pick]
     return picked
-    
+
+
 import_file()
-print (len(capitals))
+picked = generator()
