@@ -1,7 +1,6 @@
 from random import randint
 import sys
 
-capitals = ['SOFIA', 'PARIS', 'HELSINKI', 'BERLIN', 'ATHENS', 'BUDAPEST']
 
 def menu():
     start = 0
@@ -22,3 +21,14 @@ def menu():
 
 
 
+def import_file():
+    capitals = {}
+    temp = open('capitals.txt', 'r')
+    for line in temp:
+            (country, capital) = line.split(' | ')
+            capital = str(capital[:-2])
+            capitals[country] = capital
+    return capitals
+
+capitals = import_file()
+print(capitals)
