@@ -1,6 +1,7 @@
 from random import randint
 import sys
-
+country =[]
+capitals=[]
 
 def menu():
     start = 0
@@ -22,13 +23,18 @@ def menu():
 
 
 def import_file():
-    capitals = {}
     temp = open('capitals.txt', 'r')
     for line in temp:
-            (country, capital) = line.split(' | ')
-            capital = str(capital[:-2])
-            capitals[country] = capital
-    return capitals
+            (key, value) = line.split(' | ')
+            value = str(value[:-1])
+            country.append(key)
+            capitals.append(value)
+    return country, capitals
 
-capitals = import_file()
-print(capitals)
+def generator():
+    pick = random.randint(0, 182)
+    picked = capitals[pick]
+    return picked
+    
+import_file()
+print (len(capitals))
