@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 
 import time
-from random import randint
-import sys
-
-capitals = ['SOFIA', 'PARIS', 'HELSINKI', 'BERLIN', 'ATHENS', 'BUDAPEST']
+import random
+country =[]
+capitals=[]
 
 
 def menu():
@@ -33,3 +32,22 @@ def win_lose():
 Start = time.time()
 time.process_time()
 End = time.time()
+
+def import_file():
+    temp = open('capitals.txt', 'r')
+    for line in temp:
+            (key, value) = line.split(' | ')
+            value = str(value[:-1])
+            country.append(key)
+            capitals.append(value)
+    return country, capitals
+
+
+def generator():
+    pick = random.randint(0, 182)
+    picked = capitals[pick]
+    return picked
+
+
+import_file()
+picked = generator()
