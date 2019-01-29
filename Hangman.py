@@ -1,6 +1,7 @@
 from random import randint
+import sys
 
-capitals = ['Sofia', 'Paris', 'Helsinki', 'Berlin', 'Athens', 'Budapest']
+capitals = ['SOFIA', 'PARIS', 'HELSINKI', 'BERLIN', 'ATHENS', 'BUDAPEST']
 
 def menu():
     start = 0
@@ -9,8 +10,14 @@ def menu():
     if user_input == '1':
         start = 1
         return start
-    elif user_input == '4':
-        start = 4
+        
+    elif user_input == '2':
+        start = 0
         return start
+
+    elif user_input == '3':
+        start = 3
+        return start
+
 
 
