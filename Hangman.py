@@ -1,9 +1,6 @@
 #!/usr/bin/python3
 
 import time
-import random
-country = []
-capitals = []
 import random, os, sys
 lifepoint = 5
 
@@ -29,16 +26,12 @@ def menu():
 
     elif user_input == '3':
         start = 3
-        return start
-
-
-def import_file(filename='capitals.txt'):
-
-    with open('capitals.txt', 'r') as temp:
-        for line in temp:
         sys.exit()
     return start
 
+#Start = time.time()
+#time.process_time()
+#End = time.time()
 
 def import_file():
     temp = open('capitals.txt', 'r')
@@ -49,23 +42,13 @@ def import_file():
             capitals.append(value)
     return country, capitals
 
+
 def generator():
     pick = random.randint(0, 182)
     picked = capitals[pick]
     return picked
 
-def play_time():
 
-    start_time = time.clock()
-    elapsed_time = time.clock() - start_time
-    return elapsed_time
-
-menu()
-play_time()
-import_file()
-picked = generator()
-print(picked)
-print('%fseconds' %(play_time()))
 def play():
     counter = 0
     for letters in picked:
