@@ -2,19 +2,15 @@
 
 import time
 import random, os, sys
-country =[]
-capitals=[]
-answer = []
-blank = []
 lifepoint = 6
 
 def cls():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def printhangman(lifepoint):
+def printhangman():
     with open("hangart.txt", "r") as f:
         hangman = f.readlines()
-        hangmanpic = [hangman[111:135],hangman[85:109],hangman[59:83],hangman[33:57],hangman[9:31],hangman[1:7]]
+        hangmanpic = [hangman[111:135],hangman[85:109],hangman[59:83],hangman[33:57],hangman[9:31],hangman[1:7], ' ']
         for line in hangmanpic[lifepoint]:
             print(line, end="")
     f.close()
@@ -65,20 +61,60 @@ def play():
         else:
             counter = counter+1
             pass
-def p_move():            
+
+def p_move(lifepoint):            
     user_input = input()
-    user_input = str(user_input.upper) 
-    if user_input in answer:
-        counter = 0
+    user_input2 = user_input.upper() 
+    if user_input in answer or user_input2 in answer:
         for letter in answer:
-            if user_input == letter:
-                    blank[counter] = letter
+            if user_input == letter or user_input2 == letter:
+                    blank[letter] = letter
             else:
-                    life -= 1
+                    lifepoint = lifepoint - 1
+
 
     else:
-        life -= 1
+        lifepoint = lifepoint - 1
+
+def win_lose():
+    space = ' _ '
+    if space not in blank:
+        print ('You win')
+
+    elif lifepoint == 0:
+        print('You lost!')
+
+def print_out():
+    counter = 0
+    for i in blank:
+        print(blank[counter], end='')
+        counter = counter + 1
+
+    print ('\n')
+    print(lifepoint)
+    print ('\n')
 
 cls()
-menu()
+start=menu()
+while True:
+    if start == 1:
+        country =[]
+        capitals=[]
+        answer = []
+        blank = []
+        lifepoint = 6
+        import_file()
+        picked = generator()
+        play()
+        while True:
+            printhangman()
+            print_out()
+            p_move(lifepoint)
+            win_lose()
+            print(answer)
+            print(blank)
+            print(lifepoint)
+
+
+
 
