@@ -58,3 +58,4 @@ def generator():
 
 import_file()
 picked = generator()
+print(picked)
