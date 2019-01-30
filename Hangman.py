@@ -1,9 +1,15 @@
 #!/usr/bin/python3
 
 import time
-import random
+import random, os
 country =[]
 capitals=[]
+answer = []
+blank = []
+lifepoint = 6
+
+def cls():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def printhangman(lifepoint):
     with open("hangart.txt", "r") as f:
@@ -56,6 +62,33 @@ def generator():
     return picked
 
 
-import_file()
-picked = generator()
-print(picked)
+def play():
+    counter = 0
+    for letters in picked:
+        blank.append(' _ ')
+        answer.append(letter)
+    for space in answer:
+        if space == ' ':
+            blank[counter] = '   ' 
+            counter = counter + 1
+        else:
+            counter = counter+1
+            pass
+def input():            
+    player_input = input()
+    player_input = str(player_input.upper) 
+    if player_input in answer:
+        counter = 0
+        for letter in answer:
+            if player_input == letter:
+                blank[counter] = letter
+            else:
+                life -= 1
+
+    else:
+        life -= 1
+
+cls()
+start = menu()
+if start == '1':
+    
