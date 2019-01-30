@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import time
-import random, os
+import random, os, sys
 country =[]
 capitals=[]
 answer = []
@@ -21,30 +21,21 @@ def printhangman(lifepoint):
 
 def menu():
     start = 0
-    print('Welcome to Hangman game!' '\n' 'Start (1)' '\n' 'Scores(2)' '\n' 'Exit(3)')
-    user_input = input()
+    user_input = input('Welcome to Hangman game!' '\n' 'Start (1)' '\n' 'Scores(2)' '\n' 'Exit(3)' '\n')
     if user_input == '1':
         start = 1
-        return start
 
     elif user_input == '2':
         start = 2
-        return start
 
     elif user_input == '3':
         start = 3
-        return start
+        sys.exit()
+    return start
 
-def win_lose():
-
-
-    for letter in picked():
-        print('_' * len(picked))
-    
-
-Start = time.time()
-time.process_time()
-End = time.time()
+#Start = time.time()
+#time.process_time()
+#End = time.time()
 
 def import_file():
     temp = open('capitals.txt', 'r')
@@ -66,7 +57,7 @@ def play():
     counter = 0
     for letters in picked:
         blank.append(' _ ')
-        answer.append(letter)
+        answer.append(letters)
     for space in answer:
         if space == ' ':
             blank[counter] = '   ' 
@@ -74,21 +65,20 @@ def play():
         else:
             counter = counter+1
             pass
-def input():            
-    player_input = input()
-    player_input = str(player_input.upper) 
-    if player_input in answer:
+def p_move():            
+    user_input = input()
+    user_input = str(user_input.upper) 
+    if user_input in answer:
         counter = 0
         for letter in answer:
-            if player_input == letter:
-                blank[counter] = letter
+            if user_input == letter:
+                    blank[counter] = letter
             else:
-                life -= 1
+                    life -= 1
 
     else:
         life -= 1
 
 cls()
-start = menu()
-if start == '1':
-    
+menu()
+
