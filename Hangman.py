@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 
-import time
+import datetime
 import random
 country = []
 capitals = []
-import random, os, sys
+import os, sys
 lifepoint = 6
 
 def cls():
@@ -31,15 +31,6 @@ def menu():
         start = 3
         return start
 
-
-def import_file(filename='capitals.txt'):
-
-    with open('capitals.txt', 'r') as temp:
-        for line in temp:
-        sys.exit()
-    return start
-
-
 def import_file():
     temp = open('capitals.txt', 'r')
     for line in temp:
@@ -56,16 +47,10 @@ def generator():
 
 def play_time():
 
-    start_time = time.clock()
-    elapsed_time = time.clock() - start_time
+    start_time = datetime.time()
+    elapsed_time = datetime.time() - start_time
     return elapsed_time
 
-menu()
-play_time()
-import_file()
-picked = generator()
-print(picked)
-print('%fseconds' %(play_time()))
 def play():
     counter = 0
     for letters in picked:
@@ -113,6 +98,7 @@ def print_out():
 
 cls()
 start=menu()
+start_time = datetime.time()
 while True:
     if start == 1:
         country =[]
@@ -131,7 +117,4 @@ while True:
             print(answer)
             print(blank)
             print(lifepoint)
-
-
-
-
+            print('%fseconds' %(play_time()))
