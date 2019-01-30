@@ -2,7 +2,7 @@
 
 import time
 import random, os, sys
-lifepoint = 6
+lifepoint = 5
 
 def cls():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -62,19 +62,27 @@ def play():
             counter = counter+1
             pass
 
-def p_move(lifepoint):            
+def p_move(lifepoint):
+    position=[]            
     user_input = input()
     user_input2 = user_input.upper() 
     if user_input in answer or user_input2 in answer:
         for letter in answer:
             if user_input == letter or user_input2 == letter:
-                    blank[letter] = letter
+                for i in range(len(answer)):
+                    if letter == answer[i]:
+                        position.append(i)
+                        print(position)
+                        for pos in position:
+                            blank[pos] = ' '+letter+' '
+
+                    else:
+                        pass
+
             else:
-                    lifepoint = lifepoint - 1
+                pass
 
-
-    else:
-        lifepoint = lifepoint - 1
+        
 
 def win_lose():
     space = ' _ '
@@ -97,12 +105,13 @@ def print_out():
 cls()
 start=menu()
 while True:
+    cls()
+    start=menu()
     if start == 1:
         country =[]
         capitals=[]
         answer = []
         blank = []
-        lifepoint = 6
         import_file()
         picked = generator()
         play()
