@@ -74,7 +74,7 @@ def play():
         else:
             counter = counter+1
             pass
-def input():            
+def p_move():            
     player_input = input()
     player_input = str(player_input.upper) 
     if player_input in answer:
@@ -90,5 +90,3 @@ def input():
 
 cls()
 start = menu()
-if start == '1':
-    
