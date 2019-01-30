@@ -2,7 +2,7 @@
 
 import time
 import random, os, sys
-lifepoint = 5
+lifepoint = 6
 
 def cls():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -63,6 +63,7 @@ def play():
             pass
 
 def p_move(lifepoint):
+    lifeloss = 0
     position=[]            
     user_input = input()
     user_input2 = user_input.upper() 
@@ -75,23 +76,26 @@ def p_move(lifepoint):
                         print(position)
                         for pos in position:
                             blank[pos] = ' '+letter+' '
-
+                        lifeloss = 0
                     else:
-                        pass
-
-            else:
-                pass
+                       lifeloss = 0
+    else:
+        lifepoint = lifepoint - 1            
+    return lifepoint            
 
         
 
-def win_lose():
+def win_lose(lifepoint):
     space = ' _ '
-    if space not in blank:
-        print ('You win')
-
-    elif lifepoint == 0:
+    
+    if lifepoint == 0:
         print('You lost!')
+        return False
 
+    elif space not in blank:
+        print ('You win')
+    return True
+    
 def print_out():
     counter = 0
     for i in blank:
@@ -99,11 +103,11 @@ def print_out():
         counter = counter + 1
 
     print ('\n')
-    print(lifepoint)
+    print('Lifepoints: '+str(lifepoint))
     print ('\n')
 
-cls()
-start=menu()
+
+
 while True:
     cls()
     start=menu()
@@ -115,15 +119,18 @@ while True:
         import_file()
         picked = generator()
         play()
-        while True:
+        #start_time = time.clock()
+        while win_lose(lifepoint):
+            cls()
             printhangman()
             print_out()
-            p_move(lifepoint)
-            win_lose()
+            lifepoint=p_move(lifepoint) 
+            win_lose(lifepoint)
             print(answer)
             print(blank)
             print(lifepoint)
-
+            #elapsed_time = time.clock()-start_time
+            #print('%dsecond' %(elapsed_time*1000))
 
 
 
