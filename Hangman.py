@@ -2,8 +2,8 @@
 
 import time
 import random
-country =[]
-capitals=[]
+country = []
+capitals = []
 
 def printhangman(lifepoint):
     with open("hangart.txt", "r") as f:
@@ -15,8 +15,7 @@ def printhangman(lifepoint):
 
 def menu():
     start = 0
-    print('Welcome to Hangman game!' '\n' 'Start (1)' '\n' 'Scores(2)' '\n' 'Exit(3)')
-    user_input = input()
+    user_input = input('Welcome to Hangman game!' '\n' 'Start (1)' '\n' 'Scores(2)' '\n' 'Exit(3)' '\n')
     if user_input == '1':
         start = 1
         return start
@@ -29,34 +28,31 @@ def menu():
         start = 3
         return start
 
-def win():
 
+def import_file(filename='capitals.txt'):
 
-
-def play(letter):
-    for letter in picked():
-        print('_' * len(picked))
-
-
-# Start = time.time()
-# time.process_time()
-# End = time.time()
-
-def import_file():
-    temp = open('capitals.txt', 'r')
-    for line in temp:
+    with open('capitals.txt', 'r') as temp:
+        for line in temp:
             (key, value) = line.split(' | ')
             value = str(value[:-1])
             country.append(key)
             capitals.append(value)
     return country, capitals
 
-
 def generator():
     pick = random.randint(0, 182)
     picked = capitals[pick]
     return picked
 
+def play_time():
 
+    start_time = time.clock()
+    elapsed_time = time.clock() - start_time
+    return elapsed_time
+
+menu()
+play_time()
 import_file()
 picked = generator()
+print(picked)
+print('%fseconds' %(play_time()))
