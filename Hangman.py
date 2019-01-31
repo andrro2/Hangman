@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+
 import time
 import random, os, sys
 lifepoint = 1
@@ -81,19 +82,34 @@ def p_move(lifepoint):
                     else:
                        pass
     else:
-        lifepoint = lifepoint - 1            
+        lifepoint = lifepoint - 1
+        used_letter.append(user_input)            
     return lifepoint            
 
-def score(name_score):
-
+def score(name_score, game_time):
 
     name = input('Enter your name: ')
-    name_score[name] = 0
+    name_score[name] = game_time
     with open('score.txt', 'a') as temp:
-        temp.write(name)
+        temp.write('{:s} {:d}'.format(name, game_time))
         temp.write('\n')
         temp.close()
 
+
+def result():
+
+    torf = True
+    print ('Game time: '+ str(elapsed_time) + ' seconds')
+    score(name_score, elapsed_time)
+    p_input = input('Do you want to play again? (y/n)')
+    if p_input == 'y' or p_input == 'Y':
+        start = 0
+        torf = False
+    elif p_input == 'n' or p_input == 'N':
+        cls()
+        exit()
+
+    return torf
 
 def win_lose(lifepoint):
 
@@ -106,29 +122,16 @@ def win_lose(lifepoint):
         cls()
         printhangman(lifepoint)
         print('You lost!')
-        print('Game time: ' +str(elapsed_time) + ' seconds' )
-        p_input = input('Do you want to play again? (y/n)')
-        if p_input == 'y' or p_input == 'Y':
-            start = 0
-            torf = False
-        elif p_input == 'n' or p_input == 'N':
-            cls()
-            exit()
+        torf = result()
+
 
     elif space not in blank:
         cls()
         print_out()
         print ('You win')
-        print('Game time: ' +str(elapsed_time) + ' seconds' )
-        p_input = input('Do you want to play again? (y/n)')
-        if p_input == 'y' or p_input == 'Y':
-            start = 0
-            torf = False
-        elif p_input == 'n' or p_input == 'N':
-            cls()
-            exit()
-    return torf
+        torf = result()
 
+    return torf
 
 def print_out():
     counter = 0
@@ -139,25 +142,31 @@ def print_out():
     print ('\n')
     print('Lifepoints: '+str(lifepoint))
     print ('\n')
+    if len(used_letter) > 0 :
+        print('Used letters not in the word: ')
+        for notletter in range(len(used_letter)): 
+            print (used_letter[notletter].upper(), end = ', ')
+    print ('\n')
 
 
 while True:
     cls()
+    game_time = 0
     start = 0
     start=menu()
     if start == 1:
         name_score = {}
-        score(name_score)
         lifepoint = 6
         country =[]
         capitals=[]
         answer = []
         blank = []
         hint = []
+        used_letter=[]
         import_file()
         picked = generator()
-        start_time = time.time()
         play()
+        start_time = time.time()
         while win_lose(lifepoint):
             cls()
             print_out()
@@ -166,5 +175,9 @@ while True:
             lifepoint=p_move(lifepoint)
             end_time = time.time()
             elapsed_time = int(end_time - start_time)
-
-
+    elif start == 2:
+        cls()
+        with open('score.txt', 'r') as temp:
+            for line in temp:
+                print(line)
+        p1 = input('Press enter to return menu')
