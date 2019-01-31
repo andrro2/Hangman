@@ -17,7 +17,11 @@ def printhangman(lifepoint):
 
 def menu():
     start = 0
-    user_input = input('Welcome to Hangman game!' '\n' 'Start (1)' '\n' 'Scores(2)' '\n' 'Exit(3)' '\n')
+    with open('title.txt', 'r') as title:
+        text = title.readlines()
+        for line in text:
+            print(line,end="")
+    user_input = input()
     if user_input == '1':
         start = 1
 
