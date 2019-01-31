@@ -81,7 +81,8 @@ def p_move(lifepoint):
                     else:
                        lifeloss = 0
     else:
-        lifepoint = lifepoint - 1            
+        lifepoint = lifepoint - 1
+        used_letter.append(user_input)            
     return lifepoint            
 
         
@@ -94,13 +95,14 @@ def win_lose(lifepoint):
 
     if lifepoint == 0:
         cls()
-        print('You lost!')
         printhangman(lifepoint)
+        print('You lose!')
+        print ('Game time: '+ str(elapsed_time) + ' seconds')
         p_input = input('Do you want to play again? (y/n)')
-        if p_input == 'y':
+        if p_input == 'y' or p_input == 'Y':
             start = 0
             torf = False
-        elif p_input == 'n':
+        elif p_input == 'n' or p_input == 'N':
             cls()
             exit()
 
@@ -108,11 +110,12 @@ def win_lose(lifepoint):
         cls()
         print_out()
         print ('You win')
+        print ('Game time: ' + str(elapsed_time) + ' seconds')
         p_input = input('Do you want to play again? (y/n)')
-        if p_input == 'y':
+        if p_input == 'y' or p_input == 'Y':
             start = 0
             torf = False
-        elif p_input == 'n':
+        elif p_input == 'n' or p_input == 'N':
             cls()
             exit()
     return torf
@@ -127,28 +130,36 @@ def print_out():
     print ('\n')
     print('Lifepoints: '+str(lifepoint))
     print ('\n')
+    if len(used_letter) > 0 :
+        print('Used letters not in the word: ')
+        for notletter in range(len(used_letter)): 
+            print (used_letter[notletter].upper(), end = ', ')
+    print ('\n')
 
 
 while True:
     cls()
     start = 0
     start=menu()
-    lifepoint = 6
     if start == 1:
+        lifepoint = 6
         country =[]
         capitals=[]
         answer = []
         blank = []
         hint = []
+        used_letter=[]
         import_file()
         picked = generator()
         play()
+        start_time = time.time()
         while win_lose(lifepoint):
             cls()
             print_out()
             win_lose(lifepoint)
             printhangman(lifepoint) 
             lifepoint=p_move(lifepoint)
-
-
+            end_time = time.time()
+            elapsed_time = end_time - start_time
+            elapsed_time = int(elapsed_time)
 
