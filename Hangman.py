@@ -7,7 +7,7 @@ lifepoint = 6
 def cls():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def printhangman():
+def printhangman(lifepoint):
     with open("hangart.txt", "r") as f:
         hangman = f.readlines()
         hangmanpic = [hangman[111:135],hangman[85:109],hangman[59:83],hangman[33:57],hangman[9:31],hangman[1:7], ' ']
@@ -29,22 +29,19 @@ def menu():
         sys.exit()
     return start
 
-#Start = time.time()
-#time.process_time()
-#End = time.time()
-
 def import_file():
-    temp = open('capitals.txt', 'r')
-    for line in temp:
+    with open('capitals.txt', 'r') as temp:
+        for line in temp:
             (key, value) = line.split(' | ')
             value = str(value[:-1])
             country.append(key)
             capitals.append(value)
-    return country, capitals
+        return country, capitals
 
 
 def generator():
     pick = random.randint(0, 182)
+    hint.append(country[pick])
     picked = capitals[pick]
     return picked
 
@@ -75,7 +72,7 @@ def p_move(lifepoint):
                         position.append(i)
                         print(position)
                         for pos in position:
-                            blank[pos] = ' '+letter+' '
+                            blank[pos] = ' '+letter.upper()+' '
                         lifeloss = 0
                     else:
                        lifeloss = 0
@@ -86,16 +83,37 @@ def p_move(lifepoint):
         
 
 def win_lose(lifepoint):
+    torf = True
     space = ' _ '
-    
+    if lifepoint <=2:
+        print('The capital of: '+str(hint[0]))
+
     if lifepoint == 0:
+        cls()
         print('You lost!')
-        return False
+        printhangman(lifepoint)
+        p_input = input('Do you want to play again? (y/n)')
+        if p_input == 'y':
+            start = 0
+            torf = False
+        elif p_input == 'n':
+            cls()
+            exit()
 
     elif space not in blank:
+        cls()
+        print_out()
         print ('You win')
-    return True
-    
+        p_input = input('Do you want to play again? (y/n)')
+        if p_input == 'y':
+            start = 0
+            torf = False
+        elif p_input == 'n':
+            cls()
+            exit()
+    return torf
+
+
 def print_out():
     counter = 0
     for i in blank:
@@ -107,30 +125,26 @@ def print_out():
     print ('\n')
 
 
-
 while True:
     cls()
+    start = 0
     start=menu()
+    lifepoint = 6
     if start == 1:
         country =[]
         capitals=[]
         answer = []
         blank = []
+        hint = []
         import_file()
         picked = generator()
         play()
-        #start_time = time.clock()
         while win_lose(lifepoint):
             cls()
-            printhangman()
             print_out()
-            lifepoint=p_move(lifepoint) 
             win_lose(lifepoint)
-            print(answer)
-            print(blank)
-            print(lifepoint)
-            #elapsed_time = time.clock()-start_time
-            #print('%dsecond' %(elapsed_time*1000))
+            printhangman(lifepoint) 
+            lifepoint=p_move(lifepoint)
 
 
 
