@@ -7,7 +7,7 @@ lifepoint = 1
 def cls():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def printhangman():
+def printhangman(lifepoint):
     with open("hangart.txt", "r") as f:
         hangman = f.readlines()
         hangmanpic = [hangman[111:135],hangman[85:109],hangman[59:83],hangman[33:57],hangman[9:31],hangman[1:7], ' ']
@@ -17,7 +17,11 @@ def printhangman():
 
 def menu():
     start = 0
-    user_input = input('Welcome to Hangman game!' '\n' 'Start (1)' '\n' 'Scores(2)' '\n' 'Exit(3)' '\n')
+    with open('title.txt', 'r') as title:
+        text = title.readlines()
+        for line in text:
+            print(line,end="")
+    user_input = input()
     if user_input == '1':
         start = 1
 
@@ -29,19 +33,19 @@ def menu():
         sys.exit()
     return start
 
-
 def import_file():
     with open('capitals.txt', 'r') as temp:
         for line in temp:
-                (key, value) = line.split(' | ')
-                value = str(value[:-1])
-                country.append(key)
-                capitals.append(value)
+            (key, value) = line.split(' | ')
+            value = str(value[:-1])
+            country.append(key)
+            capitals.append(value)
         return country, capitals
 
 
 def generator():
     pick = random.randint(0, 182)
+    hint.append(country[pick])
     picked = capitals[pick]
     return picked
 
@@ -60,7 +64,7 @@ def play():
             pass
 
 def p_move(lifepoint):
-    lifeloss = 0
+    
     position=[]            
     user_input = input()
     user_input2 = user_input.upper()
@@ -73,27 +77,59 @@ def p_move(lifepoint):
                         position.append(i)
                         print(position)
                         for pos in position:
-                            blank[pos] = ' '+letter+' '
-                        lifeloss = 0
+                            blank[pos] = ' '+letter.upper()+' '
                     else:
-                       lifeloss = 0
+                       pass
     else:
         lifepoint = lifepoint - 1            
     return lifepoint            
 
-        
+def score(name_score):
+
+
+    name = input('Enter your name: ')
+    name_score[name] = 0
+    with open('score.txt', 'a') as temp:
+        temp.write(name)
+        temp.write('\n')
+        temp.close()
+
 
 def win_lose(lifepoint):
+
+    torf = True
     space = ' _ '
-    
+    if lifepoint <=2:
+        print('The capital of: '+str(hint[0]))
+
     if lifepoint == 0:
+        cls()
+        printhangman(lifepoint)
         print('You lost!')
-        return False
+        print('Game time: ' +str(elapsed_time) + ' seconds' )
+        p_input = input('Do you want to play again? (y/n)')
+        if p_input == 'y' or p_input == 'Y':
+            start = 0
+            torf = False
+        elif p_input == 'n' or p_input == 'N':
+            cls()
+            exit()
 
     elif space not in blank:
-        print ('You win!')
-    return True
-    
+        cls()
+        print_out()
+        print ('You win')
+        print('Game time: ' +str(elapsed_time) + ' seconds' )
+        p_input = input('Do you want to play again? (y/n)')
+        if p_input == 'y' or p_input == 'Y':
+            start = 0
+            torf = False
+        elif p_input == 'n' or p_input == 'N':
+            cls()
+            exit()
+    return torf
+
+
 def print_out():
     counter = 0
     for i in blank:
@@ -105,29 +141,30 @@ def print_out():
     print ('\n')
 
 
-
 while True:
     cls()
+    start = 0
     start=menu()
     if start == 1:
+        name_score = {}
+        score(name_score)
+        lifepoint = 6
         country =[]
         capitals=[]
         answer = []
         blank = []
+        hint = []
         import_file()
         picked = generator()
         start_time = time.time()
         play()
-        if lifepoint == 0:
-            lifepoint += 6
         while win_lose(lifepoint):
             cls()
             print_out()
-            printhangman()
-            print(answer)
-            end_time = time.time()
-            elapsed_time = end_time - start_time
-            print('Elapsed time: ''%dseconds' %(elapsed_time))
+            win_lose(lifepoint)
+            printhangman(lifepoint) 
             lifepoint=p_move(lifepoint)
+            end_time = time.time()
+            elapsed_time = int(end_time - start_time)
 
 
