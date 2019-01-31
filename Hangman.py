@@ -1,11 +1,8 @@
 #!/usr/bin/python3
 
-import datetime
-import random
-country = []
-capitals = []
-import os, sys
-lifepoint = 6
+import time
+import random, os, sys
+lifepoint = 1
 
 def cls():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -29,27 +26,25 @@ def menu():
 
     elif user_input == '3':
         start = 3
-        return start
+        sys.exit()
+    return start
+
 
 def import_file():
-    temp = open('capitals.txt', 'r')
-    for line in temp:
-            (key, value) = line.split(' | ')
-            value = str(value[:-1])
-            country.append(key)
-            capitals.append(value)
-    return country, capitals
+    with open('capitals.txt', 'r') as temp:
+        for line in temp:
+                (key, value) = line.split(' | ')
+                value = str(value[:-1])
+                country.append(key)
+                capitals.append(value)
+        return country, capitals
+
 
 def generator():
     pick = random.randint(0, 182)
     picked = capitals[pick]
     return picked
 
-def play_time():
-
-    start_time = datetime.time()
-    elapsed_time = datetime.time() - start_time
-    return elapsed_time
 
 def play():
     counter = 0
@@ -64,28 +59,41 @@ def play():
             counter = counter+1
             pass
 
-def p_move(lifepoint):            
+def p_move(lifepoint):
+    lifeloss = 0
+    position=[]            
     user_input = input()
-    user_input2 = user_input.upper() 
-    if user_input in answer or user_input2 in answer:
+    user_input2 = user_input.upper()
+    user_input3 = user_input.lower()
+    if user_input in answer or user_input2 in answer or user_input3 in answer:
         for letter in answer:
-            if user_input == letter or user_input2 == letter:
-                    blank[letter] = letter
-            else:
-                    lifepoint = lifepoint - 1
-
-
+            if user_input == letter or user_input2 == letter or user_input3 == letter:
+                for i in range(len(answer)):
+                    if letter == answer[i]:
+                        position.append(i)
+                        print(position)
+                        for pos in position:
+                            blank[pos] = ' '+letter+' '
+                        lifeloss = 0
+                    else:
+                       lifeloss = 0
     else:
-        lifepoint = lifepoint - 1
+        lifepoint = lifepoint - 1            
+    return lifepoint            
 
-def win_lose():
+        
+
+def win_lose(lifepoint):
     space = ' _ '
-    if space not in blank:
-        print ('You win')
-
-    elif lifepoint == 0:
+    
+    if lifepoint == 0:
         print('You lost!')
+        return False
 
+    elif space not in blank:
+        print ('You win!')
+    return True
+    
 def print_out():
     counter = 0
     for i in blank:
@@ -93,28 +101,33 @@ def print_out():
         counter = counter + 1
 
     print ('\n')
-    print(lifepoint)
+    print('Lifepoints: '+str(lifepoint))
     print ('\n')
 
-cls()
-start=menu()
-start_time = datetime.time()
+
+
 while True:
+    cls()
+    start=menu()
     if start == 1:
         country =[]
         capitals=[]
         answer = []
         blank = []
-        lifepoint = 6
         import_file()
         picked = generator()
+        start_time = time.time()
         play()
-        while True:
-            printhangman()
+        if lifepoint == 0:
+            lifepoint += 6
+        while win_lose(lifepoint):
+            cls()
             print_out()
-            p_move(lifepoint)
-            win_lose()
+            printhangman()
             print(answer)
-            print(blank)
-            print(lifepoint)
-            print('%fseconds' %(play_time()))
+            end_time = time.time()
+            elapsed_time = end_time - start_time
+            print('Elapsed time: ''%dseconds' %(elapsed_time))
+            lifepoint=p_move(lifepoint)
+
+
