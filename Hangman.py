@@ -180,4 +180,4 @@ while True:
         with open('score.txt', 'r') as temp:
             for line in temp:
                 print(line)
-        p1 = input('Press enter to return menu')
+        p1 = input('Press enter to return menu!')
