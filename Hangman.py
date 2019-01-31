@@ -90,10 +90,11 @@ def score(name_score, game_time):
 
     name = input('Enter your name: ')
     name_score[name] = game_time
-    with open('score.txt', 'a') as temp:
-        temp.write('{:s} {:d}'.format(name, game_time))
-        temp.write('\n')
-        temp.close()
+    if lifepoint > 0:
+        with open('score.txt', 'a') as temp:
+            temp.write('{:s} {:d}'.format(name, game_time))
+            temp.write('\n')
+            temp.close()
 
 
 def result():
