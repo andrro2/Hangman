@@ -1,1 +1,5 @@
 plyaer2 50
+N 26
+bandi 107
+Barna 24
+eztete 27
