@@ -1,1 +1,5 @@
 plyaer2 50
+player4 32
+player5 103
+dani 64
+anyád 69
