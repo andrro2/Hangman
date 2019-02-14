@@ -3,10 +3,11 @@
 
 import time
 import random, os, sys
-lifepoint = 1
+
 
 def cls():
     os.system('cls' if os.name == 'nt' else 'clear')
+
 
 def printhangman(lifepoint):
     with open("hangart.txt", "r") as f:
@@ -15,6 +16,7 @@ def printhangman(lifepoint):
         for line in hangmanpic[lifepoint]:
             print(line, end="")
     f.close()
+
 
 def menu():
     start = 0
@@ -33,6 +35,7 @@ def menu():
         start = 3
         sys.exit()
     return start
+
 
 def import_file():
     with open('capitals.txt', 'r') as temp:
@@ -64,27 +67,25 @@ def play():
             counter = counter+1
             pass
 
-def p_move(lifepoint):
+
+def player_move(lifepoint):
     
     position=[]            
     user_input = input()
     user_input2 = user_input.upper()
     user_input3 = user_input.lower()
     if user_input in answer or user_input2 in answer or user_input3 in answer:
-        for letter in answer:
-            if user_input == letter or user_input2 == letter or user_input3 == letter:
-                for i in range(len(answer)):
-                    if letter == answer[i]:
-                        position.append(i)
-                        print(position)
-                        for pos in position:
-                            blank[pos] = ' '+letter.upper()+' '
-                    else:
-                       pass
+        for i, letter in enumerate(answer):
+            if user_input.casefold() == letter.casefold():
+                position.append(i)
+                print(position)
+                for pos in position:
+                    blank[pos] = ' '+letter.upper()+' '
     else:
         lifepoint = lifepoint - 1
-        used_letter.append(user_input)            
-    return lifepoint            
+        used_letter.append(user_input)        
+    return lifepoint
+
 
 def score(name_score, game_time):
 
@@ -109,8 +110,8 @@ def result():
     elif p_input == 'n' or p_input == 'N':
         cls()
         exit()
-
     return torf
+
 
 def win_lose(lifepoint):
 
@@ -133,6 +134,7 @@ def win_lose(lifepoint):
         torf = result()
 
     return torf
+
 
 def print_out():
     counter = 0
