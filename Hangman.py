@@ -75,8 +75,9 @@ def play(picked, blank, answer):
 
 def player_move(lifepoint, answer, blank, used_letter):
     
+    guess = ''.join(answer)
     position=[]            
-    user_input = input()
+    user_input = str(input())
     user_input2 = user_input.upper()
     user_input3 = user_input.lower()
     if user_input in answer or user_input2 in answer or user_input3 in answer:
@@ -86,6 +87,11 @@ def player_move(lifepoint, answer, blank, used_letter):
                 print(position)
                 for pos in position:
                     blank[pos] = ' '+letter.upper()+' '
+    elif user_input.casefold() == guess.casefold():
+        counter = 0
+        for letter in user_input:
+            blank[counter] = ' '+letter.upper()+' '
+            counter += 1
     else:
         lifepoint = lifepoint - 1
         used_letter.append(user_input)        
@@ -132,7 +138,6 @@ def result(elapsed_time, name_score, lifepoint):
     elif p_input == 'n' or p_input == 'N':
         cls()
         exit()
-
     return while_start
 
 
@@ -142,19 +147,16 @@ def win_lose(lifepoint, hint, blank, used_letter, elapsed_time, name_score, game
     space = ' _ '
     if lifepoint <= 2:
         print('The capital of: '+str(hint[0]))
-
     if lifepoint == 0:
         cls()
         printhangman(lifepoint)
         print('You lost!')
         while_start = result(elapsed_time, name_score, lifepoint)
-
     elif space not in blank:
         cls()
         print_out(blank, used_letter, lifepoint)
-        print('You win')
+        print('Winner winner chicken dinner!')
         while_start = result(elapsed_time, name_score, lifepoint)
-
     return while_start
 
 
@@ -203,13 +205,6 @@ def main():
                 elapsed_time = int(end_time - start_time)
         elif start == 2:
             display_score()
-            '''cls()
-            pos = 1
-            with open('score.txt', 'r') as temp:
-                for line in temp:
-                    print(str(pos)+': '+line)
-                    pos += 1
-            p1 = input('Press enter to return menu!')'''
 
 if  __name__ == "__main__":
     
