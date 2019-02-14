@@ -1,5 +1,7 @@
 plyaer2 50
-player4 32
-player5 103
-dani 64
-anyád 69
+N 26
+bandi 107
+Barna 24
+eztete 27
+Rozner 37
+winner 13
