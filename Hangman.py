@@ -125,23 +125,23 @@ def display_score():
         p1 = input('Press any key to return to menu')
 
 
-def result(elapsed_time, game_time, name_score, lifepoint):
-    torf = True
+def result(elapsed_time, name_score, lifepoint):
+    while_start = True
     print('Game time: ' + str(elapsed_time) + ' seconds')
-    score(name_score, game_time, lifepoint)
+    score(name_score, elapsed_time, lifepoint)
     p_input = input('Do you want to play again? (y/n)')
     if p_input == 'y' or p_input == 'Y':
-        torf = False
+        while_start = False
     elif p_input == 'n' or p_input == 'N':
         cls()
         exit()
 
-    return torf
+    return while_start
 
 
 def win_lose(lifepoint, hint, blank, used_letter, elapsed_time, name_score, game_time):
-
-    torf = True
+    game_time = elapsed_time
+    while_start = True
     space = ' _ '
     if lifepoint <= 2:
         print('The capital of: '+str(hint[0]))
@@ -150,15 +150,15 @@ def win_lose(lifepoint, hint, blank, used_letter, elapsed_time, name_score, game
         cls()
         printhangman(lifepoint)
         print('You lost!')
-        torf = result(elapsed_time, name_score, lifepoint, game_time)
+        while_start = result(elapsed_time, name_score, lifepoint)
 
     elif space not in blank:
         cls()
         print_out(blank, used_letter, lifepoint)
         print('You win')
-        torf = result(elapsed_time, name_score, lifepoint, game_time)
+        while_start = result(elapsed_time, name_score, lifepoint)
 
-    return torf
+    return while_start
 
 
 def print_out(blank, used_letter, lifepoint):
@@ -166,7 +166,6 @@ def print_out(blank, used_letter, lifepoint):
     for _ in blank:
         print(blank[counter], end='')
         counter = counter + 1
-
     print('\n')
     print('Lifepoints: '+str(lifepoint))
     print('\n')
